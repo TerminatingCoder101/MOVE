@@ -41,15 +41,23 @@ def mouse():
                             pyautogui.click()
                             pyautogui.sleep(1)
                         elif abs(index_y - thumb_y) < 200:
-                            return(index_x,index_y)
-                            # pyautogui.moveTo(index_x, index_y)
+                            # f.m_index(index_x,index_y)
+                            pyautogui.moveTo(index_x, index_y)
         cv2.imshow('Virtual Mouse', frame)
         cv2.waitKey(1)
 
-prev = mouse()
-while True:
-    curr = mouse()
-    delta_x = curr[0] - prev[0]
-    delta_y = curr[1] - prev[1]
-    subprocess.run(["move", "mouse", str(delta_x), str(delta_y)])
-    prev = curr
+# prev = mouse()
+# while True:
+#     curr = mouse()
+#     delta_x = curr[0] - prev[0]
+#     delta_y = curr[1] - prev[1]
+#     subprocess.run(["move", "mouse", str(delta_x), str(delta_y)])
+#     prev = curr
+
+
+
+def main():
+    mouse()
+
+if __name__ == "__main__":
+    main()
