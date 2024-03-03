@@ -2,7 +2,7 @@ import virtualmouse
 #import VolumeHandControl
 
 def main():
-    print(virtualmouse.mouse())
+    virtualmouse.mouse()
 
     
     
