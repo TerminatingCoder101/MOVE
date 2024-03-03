@@ -3,6 +3,8 @@ import math
 import cv2
 import mediapipe as mp
 import time
+import pyscreenshot
+import pyautogui
 
 
 
@@ -74,6 +76,35 @@ class HandTracker():
 
         return self.lmList, bbox
 
+    # def swipe(self, pTime, initial_position):
+    #     while True:
+    #         position = self.lmList[4]
+    #
+    #         cTime = time.time()
+    #
+    #         if abs(initial_position[0]-position[0])>100 and cTime-pTime>1:
+    #             return True
+    #
+    #         if cTime-pTime > 3:
+    #             return False
+
+    def left_right(self):
+
+        tip_x_position, tip_y_position = self.lmList[8][1], self.lmList[8][2]
+        knuckle_x_position, knuckle_y_position = self.lmList[5][1], self.lmList[5][2]
+
+        if abs(tip_y_position-knuckle_y_position) <50:
+            if tip_x_position-knuckle_x_position>100:
+                return "Right"
+            elif tip_x_position-knuckle_x_position< -100:
+                return "Left"
+
+
+
+
+
+
+
     def fingersUp(self):
 
         fingers = []
@@ -88,6 +119,8 @@ class HandTracker():
                 fingers.append(0)
 
         return fingers
+
+
 
     def findDistance(self, p1, p2, img, draw = True,  r= 15, t = 3):
         x1, y1 = self.lmList[p1][1: ]
@@ -113,7 +146,7 @@ class HandTracker():
 
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
 
     pTime = 0
     cTime = 0
@@ -122,12 +155,45 @@ def main():
 
     while True:
         success, img = cap.read()
+
+        img = cv2.flip(img, 1)
+
+
         img = detector.findHands(img)
 
         lmList, bbox = detector.findPosition(img)
 
         if len(lmList) != 0:
-            print(lmList[4])
+            fingers = detector.fingersUp()
+
+            if fingers == [0,1,1,1]:
+
+                pyautogui.press("down")
+                # screenshot=pyscreenshot.grab()
+                # screenshot.show()
+
+            if fingers == [1,0,0,0]:
+                pyautogui.press("up")
+
+            if fingers == [0,1,0,0]:
+                print("bad")
+
+            if detector.left_right() == "Left":
+                pyautogui.press("left")
+
+            if detector.left_right() == "Right":
+                pyautogui.press("right")
+
+
+            # initial_position = lmList[4]
+
+            # if detector.swipe(pTime, initial_position):
+            #     print("swipe")
+            # print (fingers)
+        #     print(lmList[4])
+
+
+
 
 
         cTime = time.time()
@@ -136,7 +202,8 @@ def main():
 
         cv2.putText(img, str(int(fps)), (10,70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
-        img = cv2.flip(img, 1)
+
+
 
         cv2.imshow("Image", img)
         cv2.waitKey(1)
