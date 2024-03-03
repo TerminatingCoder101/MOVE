@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import pyautogui
+import functions as f
 capt = cv2.VideoCapture(0)
 hand_detector = mp.solutions.hands.Hands()
 drawing_utils = mp.solutions.drawing_utils
@@ -30,12 +31,13 @@ while True:
                     cv2.circle(img=frame, center=(x,y), radius=10, color=(0, 255, 255))
                     thumb_x = screen_width/frame_width*x
                     thumb_y = screen_height/frame_height*y
-                    print('outside', abs(index_y - thumb_y))
-                    if abs(index_y - thumb_y) < 20:
+                    #print('outside', abs(index_y - thumb_y))
+                    if abs(index_y - thumb_y) < 65:
                         print('clicking')
                         pyautogui.click()
                         pyautogui.sleep(1)
-                    elif abs(index_y - thumb_y) < 50:
-                        pyautogui.moveTo(index_x, index_y)
+                    elif abs(index_y - thumb_y) < 200:
+                        f.m_index(index_x,index_y)
+                        # pyautogui.moveTo(index_x, index_y)
     cv2.imshow('Virtual Mouse', frame)
     cv2.waitKey(1)
