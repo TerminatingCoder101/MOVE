@@ -16,6 +16,7 @@ void send(std::string file, char data[], size_t size) {
 }
 
 bool check_args(int argc, char *argv[]) {
+    if (argc < 2) return false;
     if (strcmp(argv[1], "mouse") == 0) {
         if (argc < 4) return false;
         else return true;
@@ -49,8 +50,8 @@ int main(int argc, char *argv[]) {
         send("/dev/hidg0", data, sizeof(data));
         char release[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
         send("/dev/hidg0", release, sizeof(release));
-    } else if (strcmp(argv[1], "release") == 0) {
-        char data[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-        send("/dev/hidg0", data, sizeof(data));
+    } else if (strcmp(argv[1], "click") == 0) {
+        char data[] = {0x01, 0x00, 0x00, 0x00};
+        send("/dev/hidg1", data, sizeof(data));
     }
 }

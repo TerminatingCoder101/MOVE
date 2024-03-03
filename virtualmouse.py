@@ -38,7 +38,7 @@ def mouse():
                         #print('outside', abs(index_y - thumb_y))
                         if abs(index_y - thumb_y) < 65:
                             print('clicking')
-                            pyautogui.click()
+                            subprocess.run(["move", "click"])
                             pyautogui.sleep(1)
                         elif abs(index_y - thumb_y) < 200:
                             # f.m_index(index_x,index_y)
