@@ -3,17 +3,11 @@ import numpy as np
 import time
 import Hand_Tracking_Module as htm
 import math
-
 import osascript
 
 
-
-
 cap = cv2.VideoCapture(0)
-
 pTime = 0
-
-
 detector = htm.HandTracker(minDetectionConf=0.7)
 
 while True:

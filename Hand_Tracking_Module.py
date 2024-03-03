@@ -1,5 +1,4 @@
 import math
-
 import cv2
 import mediapipe as mp
 import time
@@ -103,13 +102,6 @@ class HandTracker():
         length = math.hypot(x2 - x1, y2 - y1)
 
         return length, img, [x1, x2, y1, y2, cx, cy]
-
-
-
-
-
-
-
 
 
 def main():
