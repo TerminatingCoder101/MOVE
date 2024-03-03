@@ -74,7 +74,7 @@ class HandTracker():
 
         return self.lmList, bbox
 
-    def fingersUp(self):
+    def fingersUp(self): #How Many Fingers Are Up
 
         fingers = []
 
@@ -87,7 +87,7 @@ class HandTracker():
             else:
                 fingers.append(0)
 
-        return fingers
+        return fingers #Returns list of 4 elements representing fingers (in order) with 1 meaning that the finger is up and 0 meaning it is down
 
     def findDistance(self, p1, p2, img, draw = True,  r= 15, t = 3):
         x1, y1 = self.lmList[p1][1: ]
